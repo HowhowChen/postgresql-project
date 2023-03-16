@@ -1,7 +1,7 @@
 From node:19.4
 
 ENV DEV_DATABASE_URL="postgres://admin:password@postgressql/dev_db" \
-    TEST_DATABASE_URL="postgres://admin:password@postgressql/test_db" \
+    TEST_DATABASE_URL="" \
     DATABASE_URL="" 
 
 WORKDIR /app

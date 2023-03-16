@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  postgressql:
+    container_name: postgressql
+    image: postgres:13.0-alpine
+    volumes:
+      - postgressql:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"      
+    environment:
+      - POSTGRES_DB=dev_db
+      - POSTGRES_USER=howhow
+      - POSTGRES_PASSWORD=password
+    networks:
+      - app-net
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4    
+    ports:                   
+      - 8001:80
+    environment:            
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - app-net
+    depends_on:             
+      - postgressql
+
+  web:
+    image: howhowchen/postgresweb
+    build: ./
+    container_name: postgreweb
+    restart: "always"
+    ports:
+      - "3000:3000"
+    environment:
+      - DEV_DATABASE_URL=postgres://admin:password@postgressql/dev_db
+    networks:
+      - app-net
+    depends_on:             
+      - postgressql
+
+volumes:
+  postgressql:
+
+networks:
+  app-net:
+    name: postgres-dev
