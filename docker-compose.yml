@@ -10,7 +10,7 @@ services:
       - "5432:5432"      
     environment:
       - POSTGRES_DB=dev_db
-      - POSTGRES_USER=howhow
+      - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
     networks:
       - app-net
